@@ -10,15 +10,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-import com.issa.omar.booklounge.dummy.DummyContent
-import com.issa.omar.booklounge.dummy.DummyContent.DummyItem
+import com.issa.omar.booklounge.model.Book
 
 /**
  * A fragment representing a list of Items.
  * Activities containing this fragment MUST implement the
- * [BookListFragment.OnBookSelectedListener] interface.
+ * [WishlistFragment.OnBookSelectedListener] interface.
  */
-class BookListFragment : Fragment() {
+class WishlistFragment : Fragment() {
 
     // TODO: Customize parameters
     private var columnCount = 1
@@ -26,7 +25,7 @@ class BookListFragment : Fragment() {
     private var listener: OnBookSelectedListener? = null
 
     companion object {
-        fun newInstance() = BookListFragment()
+        fun newInstance() = WishlistFragment()
     }
 
     override fun onCreateView(
@@ -42,7 +41,7 @@ class BookListFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = MyBookRecyclerViewAdapter(DummyContent.ITEMS, listener)
+                //adapter = BookAdapter(DummyContent.ITEMS, listener)
             }
         }
         return view
@@ -75,7 +74,7 @@ class BookListFragment : Fragment() {
      */
     interface OnBookSelectedListener {
         // TODO: Update argument type and name
-        fun onBookSelected(item: DummyItem?)
+        fun onBookSelected(item: Book?)
     }
 
     fun setOnBookSelectedListener(listener: OnBookSelectedListener) {

@@ -2,4 +2,6 @@
     <string name="app_name">Book Lounge</string>
     <string name="title_search">Search</string>
     <string name="title_wishlist">Wishlist</string>
+    <string name="search_hint">Search books</string>
+    <string name="book_image_desc">Book Image</string>
 </resources>

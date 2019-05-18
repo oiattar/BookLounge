@@ -6,9 +6,9 @@ import androidx.annotation.IdRes
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.issa.omar.booklounge.dummy.DummyContent
+import com.issa.omar.booklounge.model.Book
 
-class MainActivity : AppCompatActivity(), BookListFragment.OnBookSelectedListener {
+class MainActivity : AppCompatActivity(), WishlistFragment.OnBookSelectedListener {
 
     private var savedStateSparseArray = SparseArray<Fragment.SavedState>()
     private var currentSelectItemId = R.id.navigation_search
@@ -18,17 +18,6 @@ class MainActivity : AppCompatActivity(), BookListFragment.OnBookSelectedListene
     }
 
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        /*when (item.itemId) {
-            R.id.navigation_search -> {
-                textMessage.setText(R.string.title_search)
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_wishlist -> {
-                textMessage.setText(R.string.title_wishlist)
-                return@OnNavigationItemSelectedListener true
-            }
-        }
-        false*/
         swapFragments(item.itemId);
         true
     }
@@ -53,7 +42,7 @@ class MainActivity : AppCompatActivity(), BookListFragment.OnBookSelectedListene
     }
 
     override fun onAttachFragment(fragment: Fragment?) {
-        if (fragment is BookListFragment) {
+        if (fragment is WishlistFragment) {
             fragment.setOnBookSelectedListener(this);
         }
     }
@@ -69,7 +58,7 @@ class MainActivity : AppCompatActivity(), BookListFragment.OnBookSelectedListene
         val tag = itemId.toString()
         val fragment = supportFragmentManager.findFragmentByTag(tag) ?: when (itemId) {
             R.id.navigation_wishlist -> {
-                BookListFragment.newInstance()
+                WishlistFragment.newInstance()
             }
             else -> {
                 SearchFragment.newInstance()
@@ -91,7 +80,7 @@ class MainActivity : AppCompatActivity(), BookListFragment.OnBookSelectedListene
         currentSelectItemId = itemId
     }
 
-    override fun onBookSelected(item: DummyContent.DummyItem?) {
+    override fun onBookSelected(item: Book?) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
