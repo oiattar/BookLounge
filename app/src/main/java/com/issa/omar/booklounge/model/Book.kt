@@ -1,7 +1,10 @@
 package com.issa.omar.booklounge.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class Book (
     val title: String,
     @SerializedName("author_name")
@@ -10,7 +13,7 @@ data class Book (
     val smallImageId: String,
     @SerializedName("cover_i")
     val largeImageId: String
-) {
+): Parcelable {
     companion object {
         const val BASE_IMAGE_URL = "https://covers.openlibrary.org/"
         const val SMALL_IMAGE_PREFIX = "b/olid/"

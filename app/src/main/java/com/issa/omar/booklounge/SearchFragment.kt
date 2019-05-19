@@ -1,5 +1,6 @@
 package com.issa.omar.booklounge
 
+import android.content.Context
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.util.Log
@@ -78,7 +79,7 @@ class SearchFragment : Fragment() {
         // TODO: Use the ViewModel
     }
 
-    /*override fun onAttach(context: Context) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnBookSelectedListener) {
             listener = context
@@ -90,7 +91,7 @@ class SearchFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         listener = null
-    }*/
+    }
 
     override fun onPause() {
         super.onPause()
@@ -111,7 +112,7 @@ class SearchFragment : Fragment() {
     private fun showResult(books: List<Book>) {
         Log.d("MOONZ", "success: $books")
         resultsList.visibility = View.VISIBLE
-        resultsList.adapter = BookAdapter(books)
+        resultsList.adapter = BookAdapter(books, listener)
     }
 
     private fun showError(error: String?) {
@@ -119,8 +120,7 @@ class SearchFragment : Fragment() {
     }
 
     interface OnBookSelectedListener {
-        // TODO: Update argument type and name
-        fun onBookSelected(item: Book?)
+        fun onBookSelected(book: Book?)
     }
 
     fun setOnBookSelectedListener(listener: OnBookSelectedListener) {

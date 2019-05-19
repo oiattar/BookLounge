@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 
 
-import com.issa.omar.booklounge.WishlistFragment.OnBookSelectedListener
+import com.issa.omar.booklounge.SearchFragment.OnBookSelectedListener
 import com.issa.omar.booklounge.model.Book
 import com.squareup.picasso.Picasso
 
@@ -18,18 +18,18 @@ import com.squareup.picasso.Picasso
  * TODO: Replace the implementation with code for your data type.
  */
 class BookAdapter(
-    private val books: List<Book>//,
-    //private val mListener: OnBookSelectedListener?
+    private val books: List<Book>,
+    private val listener: OnBookSelectedListener?
 ) : RecyclerView.Adapter<BookAdapter.ViewHolder>() {
 
-    private val mOnClickListener: View.OnClickListener
+    private val onClickListener: View.OnClickListener
 
     init {
-        mOnClickListener = View.OnClickListener { v ->
-            val item = v.tag as Book
+        onClickListener = View.OnClickListener { v ->
+            val book = v.tag as Book
             // Notify the active callbacks interface (the activity, if the fragment is attached to
             // one) that an item has been selected.
-            //mListener?.onBookSelected(item)
+            listener?.onBookSelected(book)
         }
     }
 
@@ -47,7 +47,7 @@ class BookAdapter(
 
         with(holder.view) {
             tag = book
-            setOnClickListener(mOnClickListener)
+            setOnClickListener(onClickListener)
         }
     }
 

@@ -1,5 +1,6 @@
 package com.issa.omar.booklounge
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.SparseArray
 import androidx.annotation.IdRes
@@ -8,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.issa.omar.booklounge.model.Book
 
-class MainActivity : AppCompatActivity(), WishlistFragment.OnBookSelectedListener {
+class MainActivity : AppCompatActivity(), SearchFragment.OnBookSelectedListener {
 
     private var savedStateSparseArray = SparseArray<Fragment.SavedState>()
     private var currentSelectItemId = R.id.navigation_search
@@ -42,8 +43,8 @@ class MainActivity : AppCompatActivity(), WishlistFragment.OnBookSelectedListene
     }
 
     override fun onAttachFragment(fragment: Fragment?) {
-        if (fragment is WishlistFragment) {
-            fragment.setOnBookSelectedListener(this);
+        if (fragment is SearchFragment) {
+            fragment.setOnBookSelectedListener(this)
         }
     }
 
@@ -80,7 +81,9 @@ class MainActivity : AppCompatActivity(), WishlistFragment.OnBookSelectedListene
         currentSelectItemId = itemId
     }
 
-    override fun onBookSelected(item: Book?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun onBookSelected(book: Book?) {
+        val intent = Intent(this, BookDetailActivity::class.java)
+        intent.putExtra("SELECTED_BOOK", book)
+        startActivity(intent)
     }
 }
