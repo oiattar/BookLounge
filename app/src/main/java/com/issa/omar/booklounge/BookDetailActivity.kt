@@ -6,7 +6,6 @@ import android.view.MenuItem
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import com.issa.omar.booklounge.model.Book
-import com.issa.omar.booklounge.model.BookDetails
 import com.issa.omar.booklounge.model.BookDetailsResponse
 import com.issa.omar.booklounge.realm.RealmBook
 import com.issa.omar.booklounge.rest.BookApiService
@@ -15,7 +14,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
-import io.realm.RealmResults
 import kotlinx.android.synthetic.main.activity_book_detail.*
 import kotlinx.android.synthetic.main.content_book_detail.*
 
@@ -37,7 +35,7 @@ class BookDetailActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
         realm = Realm.getDefaultInstance()
         book = intent.getParcelableExtra("SELECTED_BOOK")
-        if(!book.smallImageId.isNullOrBlank()) getBookDetails()
+        //if(!book.smallImageId.isNullOrBlank()) getBookDetails()
         setBookDetails()
         isWishlist = checkIfWishlist()
         setWishlistIcon(isWishlist)
@@ -111,6 +109,11 @@ class BookDetailActivity : AppCompatActivity() {
             true -> wishlist_button.setImageResource(android.R.drawable.btn_star_big_on)
             false -> wishlist_button.setImageResource(android.R.drawable.btn_star_big_off)
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        disposable?.dispose()
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

@@ -1,14 +1,15 @@
 package com.issa.omar.booklounge
 
 import android.content.Context
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.appcompat.widget.SearchView
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.issa.omar.booklounge.model.Book
 import com.issa.omar.booklounge.rest.BookApiService
@@ -35,6 +36,7 @@ class SearchFragment : Fragment() {
 
     private lateinit var resultsList: RecyclerView
     private lateinit var searchBar: SearchView
+    private lateinit var errorMessage: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +46,7 @@ class SearchFragment : Fragment() {
 
         searchBar = view.findViewById(R.id.search_bar)
         resultsList = view.findViewById(R.id.results_list)
+        errorMessage = view.findViewById(R.id.error_message)
 
         Observable.create(ObservableOnSubscribe<String> { subscriber ->
             searchBar.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
@@ -103,11 +106,15 @@ class SearchFragment : Fragment() {
     private fun showResult(books: List<Book>) {
         Log.d("MOONZ", "success: $books")
         resultsList.visibility = View.VISIBLE
+        errorMessage.visibility = View.GONE
         resultsList.adapter = BookAdapter(books, listener)
+        resultsList.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
     }
 
     private fun showError(error: String?) {
         Log.d("MOONZ", "error: $error")
+        errorMessage.visibility = View.VISIBLE
+        resultsList.visibility = View.INVISIBLE
     }
 
     fun setOnBookSelectedListener(listener: OnBookSelectedListener) {

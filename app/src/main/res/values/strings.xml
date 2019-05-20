@@ -7,4 +7,6 @@
     <string name="add_wishlist_message">Added to Wishlist</string>
     <string name="remove_wishlist_message">Removed from Wishlist</string>
     <string name="title_activity_book_detail">BookDetailActivity</string>
+    <string name="empty_list_message">Wishlist is empty!\nAdd some books from the Search tab!</string>
+    <string name="error_message">Sorry there was a problem\nPlease try again</string>
 </resources>
