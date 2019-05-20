@@ -1,6 +1,8 @@
 package com.issa.omar.booklounge.rest
 
-import com.issa.omar.booklounge.model.BookDetailsResponse
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.issa.omar.booklounge.model.BookDetails
 import com.issa.omar.booklounge.model.BookResponse
 import io.reactivex.Observable
 import retrofit2.Retrofit
@@ -14,10 +16,15 @@ interface BookApiService {
     companion object {
         private const val BASE_URL: String = "https://openlibrary.org/"
 
+        private val gson: Gson =
+            GsonBuilder()
+                .registerTypeAdapter(BookDetails::class.java, BookDetailsDeserializer())
+                .create()
+
         fun create(): BookApiService {
             return Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
                 .create(BookApiService::class.java)
@@ -30,5 +37,5 @@ interface BookApiService {
     @GET("/api/books")
     fun getDetails(@Query("bibkeys") key: String,
                    @Query("jscmd") jscmd: String = "details",
-                   @Query("format") format: String = "json") : Observable<BookDetailsResponse>
+                   @Query("format") format: String = "json") : Observable<BookDetails>
 }

@@ -36,7 +36,6 @@ class WishlistFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_wish_list, container, false)
         val realm = Realm.getDefaultInstance()
         val results = realm.where(RealmBook::class.java).findAll()
-        Log.d("MOONZ", results.toString())
 
         emptyListMessage = view.findViewById(R.id.empty_list_message)
         wishlist = view.findViewById(R.id.wishlist)

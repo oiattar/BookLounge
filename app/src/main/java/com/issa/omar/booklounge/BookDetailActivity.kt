@@ -3,10 +3,11 @@ package com.issa.omar.booklounge
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import com.issa.omar.booklounge.model.Book
-import com.issa.omar.booklounge.model.BookDetailsResponse
+import com.issa.omar.booklounge.model.BookDetails
 import com.issa.omar.booklounge.realm.RealmBook
 import com.issa.omar.booklounge.rest.BookApiService
 import com.squareup.picasso.Picasso
@@ -23,6 +24,7 @@ class BookDetailActivity : AppCompatActivity() {
     private lateinit var realm: Realm
     private var isWishlist: Boolean = false
     var disposable: Disposable? = null
+    val TAG: String = BookDetailActivity::class.java.simpleName
     private val bookApiService by lazy {
         BookApiService.create()
     }
@@ -35,7 +37,7 @@ class BookDetailActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
         realm = Realm.getDefaultInstance()
         book = intent.getParcelableExtra("SELECTED_BOOK")
-        //if(!book.smallImageId.isNullOrBlank()) getBookDetails()
+        if(!book.smallImageId.isNullOrBlank()) getBookDetails()
         setBookDetails()
         isWishlist = checkIfWishlist()
         setWishlistIcon(isWishlist)
@@ -65,13 +67,17 @@ class BookDetailActivity : AppCompatActivity() {
                 )
     }
 
-    private fun showResult(details: BookDetailsResponse) {
-        Log.d("MOONZ", "successdd: $details")
-        //book_description.text = details.description
+    private fun showResult(details: BookDetails) {
+        book_description.text = details.description
+        publish_date.text = details.publishDate
+        if(!details.subjects.isNullOrEmpty()) subjects_title.visibility = View.VISIBLE
+        subjects.text = details.subjects.joinToString { it }
+        if(!details.publishers.isNullOrEmpty()) publisher_title.visibility = View.VISIBLE
+        publishers.text = details.publishers.joinToString { it }
     }
 
     private fun showError(error: String?) {
-        Log.d("MOONZ", "errordd: $error")
+        Log.e(TAG, "error: $error")
     }
 
     private fun onWishlistClicked() {

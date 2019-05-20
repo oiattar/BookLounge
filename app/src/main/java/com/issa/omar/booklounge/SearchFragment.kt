@@ -32,6 +32,7 @@ class SearchFragment : Fragment() {
     }
     var disposable: Disposable? = null
 
+    val TAG: String = SearchFragment::class.java.simpleName
     private var listener: OnBookSelectedListener? = null
 
     private lateinit var resultsList: RecyclerView
@@ -67,7 +68,6 @@ class SearchFragment : Fragment() {
         .filter { text -> text.isNotBlank() }
         .subscribe {text ->
             beginSearch(text)
-            Log.d("MOONZ", "sub: $text")
         }
 
         return view
@@ -104,7 +104,6 @@ class SearchFragment : Fragment() {
     }
 
     private fun showResult(books: List<Book>) {
-        Log.d("MOONZ", "success: $books")
         resultsList.visibility = View.VISIBLE
         errorMessage.visibility = View.GONE
         resultsList.adapter = BookAdapter(books, listener)
@@ -112,7 +111,7 @@ class SearchFragment : Fragment() {
     }
 
     private fun showError(error: String?) {
-        Log.d("MOONZ", "error: $error")
+        Log.e(TAG, "error: $error")
         errorMessage.visibility = View.VISIBLE
         resultsList.visibility = View.INVISIBLE
     }

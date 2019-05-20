@@ -9,4 +9,7 @@
     <string name="title_activity_book_detail">BookDetailActivity</string>
     <string name="empty_list_message">Wishlist is empty!\nAdd some books from the Search tab!</string>
     <string name="error_message">Sorry there was a problem\nPlease try again</string>
+    <string name="subjects_title">Subjects: </string>
+    <string name="publisher_title">Publisher(s): </string>
+    <string name="sample_desc">During his travels across Middle-earth, the hobbit Bilbo Baggins had found the Ring. But the simple band of gold was far from ordinary; it was in fact the One Ring - the greatest of the ancient Rings of Power. Sauron, the Dark Lord, had infused it with his own evil magic, and when it was lost, he was forced to flee into hiding.</string>
 </resources>
