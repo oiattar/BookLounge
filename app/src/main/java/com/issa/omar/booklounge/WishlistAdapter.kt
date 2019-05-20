@@ -1,30 +1,31 @@
 package com.issa.omar.booklounge
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-
-
+import androidx.recyclerview.widget.RecyclerView
 import com.issa.omar.booklounge.model.Book
+import com.issa.omar.booklounge.realm.RealmBook
 import com.squareup.picasso.Picasso
+import io.realm.RealmRecyclerViewAdapter
+import io.realm.RealmResults
 
-/**
- * [RecyclerView.Adapter] that can display a [Book] and makes a call to the
- * specified [OnBookSelectedListener].
- */
-class BookAdapter(
-    private val books: List<Book>,
-    private val listener: OnBookSelectedListener?
-) : RecyclerView.Adapter<BookAdapter.ViewHolder>() {
+class WishlistAdapter(
+    private val books: RealmResults<RealmBook>,
+    private val listener: OnBookSelectedListener?,
+    autoUpdate: Boolean = true)
+    : RealmRecyclerViewAdapter<RealmBook, WishlistAdapter.ViewHolder>(books, autoUpdate) {
 
     private val onClickListener: View.OnClickListener
 
     init {
         onClickListener = View.OnClickListener { v ->
-            val book = v.tag as Book
+            val realmBook = v.tag as RealmBook
+            val authors: MutableList<String> = mutableListOf()
+            for (name in realmBook.authorName) authors.add(name)
+            val book = Book(realmBook.key, realmBook.title, authors, realmBook.smallImageId, realmBook.largeImageId)
             // Notify the active callbacks interface (the activity, if the fragment is attached to
             // one) that an item has been selected.
             listener?.onBookSelected(book)
@@ -39,9 +40,9 @@ class BookAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val book = books[position]
-        Picasso.get().load(book.getSmallImageUrl()).into(holder.image)
-        holder.title.text = book.title
-        holder.author.text = book.authorName?.joinToString { it }
+        Picasso.get().load(book?.getSmallImageUrl()).into(holder.image)
+        holder.title.text = book?.title
+        holder.author.text = book?.authorName?.joinToString { it }
 
         with(holder.view) {
             tag = book

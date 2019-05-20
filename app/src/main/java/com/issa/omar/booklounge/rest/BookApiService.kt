@@ -1,5 +1,6 @@
 package com.issa.omar.booklounge.rest
 
+import com.issa.omar.booklounge.model.BookDetailsResponse
 import com.issa.omar.booklounge.model.BookResponse
 import io.reactivex.Observable
 import retrofit2.Retrofit
@@ -25,4 +26,9 @@ interface BookApiService {
 
     @GET("search.json")
     fun search(@Query("q") query: String): Observable<BookResponse>
+
+    @GET("/api/books")
+    fun getDetails(@Query("bibkeys") key: String,
+                   @Query("jscmd") jscmd: String = "details",
+                   @Query("format") format: String = "json") : Observable<BookDetailsResponse>
 }

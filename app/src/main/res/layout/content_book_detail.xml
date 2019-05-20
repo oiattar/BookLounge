@@ -20,20 +20,22 @@
 
     <TextView
         android:id="@+id/book_title"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/text_margin"
+        android:layout_marginEnd="@dimen/text_margin"
         android:textSize="25sp"
         android:textAppearance="?attr/textAppearanceListItem"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/book_author"
         app:layout_constraintLeft_toRightOf="@id/book_image"
         app:layout_constraintTop_toTopOf="@id/book_image"
+        app:layout_constraintRight_toRightOf="parent"
         tools:text="Lord of the Rings" />
 
     <TextView
         android:id="@+id/book_author"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textAppearance="?attr/textAppearanceListItem"
         android:textColor="#434343"
@@ -41,6 +43,17 @@
         app:layout_constraintBottom_toBottomOf="@id/book_image"
         app:layout_constraintLeft_toLeftOf="@id/book_title"
         app:layout_constraintTop_toBottomOf="@id/book_title"
+        app:layout_constraintRight_toRightOf="@id/book_title"
         tools:text="JRR Tolkien" />
+
+    <TextView
+        android:id="@+id/book_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:textAppearance="?attr/textAppearanceListItem"
+        app:layout_constraintTop_toBottomOf="@id/book_image"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,8 +8,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.issa.omar.booklounge.model.Book
+import io.realm.Realm
 
-class MainActivity : AppCompatActivity(), SearchFragment.OnBookSelectedListener {
+class MainActivity : AppCompatActivity(), OnBookSelectedListener {
 
     private var savedStateSparseArray = SparseArray<Fragment.SavedState>()
     private var currentSelectItemId = R.id.navigation_search
@@ -19,7 +20,7 @@ class MainActivity : AppCompatActivity(), SearchFragment.OnBookSelectedListener 
     }
 
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        swapFragments(item.itemId);
+        swapFragments(item.itemId)
         true
     }
 
@@ -34,6 +35,8 @@ class MainActivity : AppCompatActivity(), SearchFragment.OnBookSelectedListener 
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
+
+        Realm.init(this)
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
@@ -44,6 +47,8 @@ class MainActivity : AppCompatActivity(), SearchFragment.OnBookSelectedListener 
 
     override fun onAttachFragment(fragment: Fragment?) {
         if (fragment is SearchFragment) {
+            fragment.setOnBookSelectedListener(this)
+        } else if (fragment is WishlistFragment) {
             fragment.setOnBookSelectedListener(this)
         }
     }

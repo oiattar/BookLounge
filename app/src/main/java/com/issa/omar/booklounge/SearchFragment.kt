@@ -31,9 +31,6 @@ class SearchFragment : Fragment() {
     }
     var disposable: Disposable? = null
 
-    private lateinit var viewModel: SearchViewModel
-
-
     private var listener: OnBookSelectedListener? = null
 
     private lateinit var resultsList: RecyclerView
@@ -62,7 +59,7 @@ class SearchFragment : Fragment() {
             })
         })
         .map { text -> text.toLowerCase().trim() }
-        .debounce(250, TimeUnit.MILLISECONDS)
+        .debounce(200, TimeUnit.MILLISECONDS)
         .distinct()
         .filter { text -> text.isNotBlank() }
         .subscribe {text ->
@@ -71,12 +68,6 @@ class SearchFragment : Fragment() {
         }
 
         return view
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(SearchViewModel::class.java)
-        // TODO: Use the ViewModel
     }
 
     override fun onAttach(context: Context) {
@@ -117,10 +108,6 @@ class SearchFragment : Fragment() {
 
     private fun showError(error: String?) {
         Log.d("MOONZ", "error: $error")
-    }
-
-    interface OnBookSelectedListener {
-        fun onBookSelected(book: Book?)
     }
 
     fun setOnBookSelectedListener(listener: OnBookSelectedListener) {
