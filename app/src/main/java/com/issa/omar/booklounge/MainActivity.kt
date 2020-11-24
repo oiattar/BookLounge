@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity(), OnBookSelectedListener {
         outState.putInt(SAVED_STATE_CURRENT_TAB_KEY, currentSelectItemId)
     }
 
-    override fun onAttachFragment(fragment: Fragment?) {
+    override fun onAttachFragment(fragment: Fragment) {
         if (fragment is SearchFragment) {
             fragment.setOnBookSelectedListener(this)
         } else if (fragment is WishlistFragment) {
