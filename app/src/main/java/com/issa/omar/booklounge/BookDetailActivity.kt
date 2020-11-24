@@ -36,7 +36,7 @@ class BookDetailActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         realm = Realm.getDefaultInstance()
-        book = intent.getParcelableExtra("SELECTED_BOOK")
+        book = intent.getParcelableExtra("SELECTED_BOOK")!!
         if(!book.smallImageId.isNullOrBlank()) getBookDetails()
         setBookDetails()
         isWishlist = checkIfWishlist()
@@ -122,8 +122,8 @@ class BookDetailActivity : AppCompatActivity() {
         disposable?.dispose()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if(item?.itemId == android.R.id.home) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == android.R.id.home) {
             finish()
         }
         return super.onOptionsItemSelected(item)
